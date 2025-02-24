@@ -5,24 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Second Chance PC est sur git retentageùLKHD</title>
     <link rel="stylesheet" href="css/style.css" />
-  </head>
-  <script>
-    document.querySelector("form").addEventListener("submit", function(event) {
-        event.preventDefault(); // Empêche l'envoi classique du formulaire
-        
-        // Récupère les valeurs des champs
-        let nom = document.getElementById("name").value;
-        let email = document.getElementById("email").value;
-        let message = document.getElementById("message").value;
-    
-        console.log("Nom :", nom);
-        console.log("Email :", email);
-        console.log("Message :", message);
-        
-        alert("Formulaire envoyé ! (Regarde la console F12)");
-    });
-    </script>
-    
+  </head> 
   <body>
     <header>
       <img src="images/logo.png" alt="Second Chance PC" width="250" />
@@ -75,18 +58,22 @@
 
     <section>
       <h2>📩 Contactez-nous</h2>
-      <form>
+      <form action="contact.php" method="POST">
         <label for="name">Nom :</label>
-        <input type="text" id="name" name="name" required />
-        <br />
+        <input type="text" id="name" name="name" required>
+        <br>
+        
         <label for="email">Email :</label>
-        <input type="email" id="email" name="email" required />
-        <br />
+        <input type="email" id="email" name="email" required>
+        <br>
+        
         <label for="message">Message :</label>
         <textarea id="message" name="message" required></textarea>
-        <br />
+        <br>
+        
         <button type="submit">Envoyer</button>
-      </form>
+    </form>
+    
     </section>
 
     <footer>

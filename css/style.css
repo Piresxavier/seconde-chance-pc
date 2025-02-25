@@ -51,6 +51,7 @@ header h1 {
     font-weight: bold;
 }
 ul {
+    padding-left: 20px; /* Décale toute la liste un peu à droite */
     text-align: left; /* Aligne le texte des listes à gauche */
     list-style-position: inside; /* Garde les puces bien alignées */
     padding-left: 0; /* Supprime les marges à gauche */

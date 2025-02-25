@@ -50,7 +50,11 @@ header h1 {
     color: black;
     font-weight: bold;
 }
-
+ul {
+    text-align: left; /* Aligne le texte des listes à gauche */
+    list-style-position: inside; /* Garde les puces bien alignées */
+    padding-left: 0; /* Supprime les marges à gauche */
+}
 
 section {
     margin: 20px;

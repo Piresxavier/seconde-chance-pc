@@ -96,3 +96,48 @@ footer {
     background: #222;
     color: white;
 }
+/* 📱 Styles pour les écrans de moins de 768px (tablettes et mobiles) */
+@media (max-width: 768px) {
+
+    body {
+        font-size: 1.1em; /* Texte un peu plus grand pour mobile */
+        padding: 10px;
+    }
+
+    header {
+        flex-direction: column; /* Met l'image et le texte en colonne */
+        text-align: center;
+    }
+
+    header img {
+        width: 80%; /* Réduit la taille du logo */
+        max-width: 250px; /* Évite qu'il devienne trop grand */
+        margin-bottom: 10px;
+    }
+
+    .grand-icone {
+        font-size: 2.5em; /* Agrandit l’icône ♻ sur mobile */
+    }
+
+    section {
+        padding: 15px;
+        text-align: center; /* Centre le texte pour un meilleur rendu */
+    }
+
+    form {
+        width: 100%; /* Le formulaire prend toute la largeur */
+        max-width: 400px;
+        margin: auto;
+    }
+
+    input, textarea {
+        width: 100%; /* Prend toute la largeur de l’écran */
+        font-size: 1.1em; /* Texte plus lisible */
+    }
+
+    button {
+        width: 100%;
+        padding: 15px;
+        font-size: 1.2em;
+    }
+}

@@ -1,83 +1,90 @@
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Second Chance PC</title>
-    <link rel="stylesheet" href="css/style.css" />
-  </head> 
-  <body>
-    <header>
-      <img src="images/logo.png" alt="Second Chance PC" width="250" />
-      <div>
-        <h1>Faites revivre votre PC avec Linux !</h1>
-        <hr />
-        <p>
-          Passez à Linux et redonnez vie à vos anciens PC – Une seconde chance
-          pour des machines qui ont encore beaucoup à offrir sous Linux !
-        </p>
-        <p class="slogan">
-          <span class="grand-icone">♻</span> Réinventez vos PC, réduisez votre
-          impact !
-        </p>
-      </div>
-    </header>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CB Serveur</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 1rem;
+      background-color: #f5f5f5;
+    }
+    h1 {
+      text-align: center;
+    }
+    input, button, textarea {
+      width: 100%;
+      margin-top: 0.5rem;
+      padding: 0.5rem;
+      font-size: 1.1rem;
+    }
+    .paiement {
+      background: white;
+      padding: 0.5rem;
+      margin-top: 0.5rem;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <h1>CB Serveur</h1>
+  <input type="number" step="0.01" id="montant" placeholder="Montant (€)" />
+  <textarea id="note" placeholder="Note (optionnelle)"></textarea>
+  <button onclick="ajouterPaiement()">Ajouter</button>
+  <h2>Total : <span id="total">0.00</span> €</h2>
+  <div id="liste"></div>
+  <button onclick="exporter()">📄 Exporter</button>
+  <button onclick="reinitialiser()">🗑️ Réinitialiser</button>
 
-    <section>
-      <h2>🎯 Pourquoi passer à Linux ?</h2>
-      <ul>
-        <li>✅ Rapide et fluide</li>
-        <li>✅ Sans virus, sans mises à jour forcées</li>
-        <li>✅ 100% gratuit, sans licence à payer</li>
-        <li>✅ Idéal pour Internet, bureautique et    multimédia</li>
-        <li>✅ Personnalisable et adapté à vos besoins</li>
-      </ul>
-    </section>
+  <script>
+    let paiements = JSON.parse(localStorage.getItem("paiements_cb") || "[]");
 
-    <section>
-      <h2>🛠️ Services proposés :</h2>
-      <ul>
-        <li>🔹 Installation complète de Linux (Ubuntu, Mint, Lubuntu ...)</li>
-        <li>🔹 Optimisation des performances (SSD, RAM, logiciels adaptés)</li>
-        <li>🔹 Dual boot Linux + Windows ou Mac OS si besoin</li>
-        <li>🔹 Configuration sur mesure avec vos logiciels préférés</li>
-        <li>🔹 Formation rapide pour bien démarrer</li>
-      </ul>
-    </section>
+    function afficherListe() {
+      let total = 0;
+      let html = "";
+      for (let p of paiements) {
+        total += parseFloat(p.montant);
+        html += `<div class='paiement'>💳 ${p.montant} €<br>📝 ${p.note || "-"}</div>`;
+      }
+      document.getElementById("liste").innerHTML = html;
+      document.getElementById("total").textContent = total.toFixed(2);
+    }
 
-    <section>
-      <h2>💰 Tarifs :</h2>
-      <ul>
-        <li>✅ Installation de base : 60 €</li>
-        <li>✅ Installation + optimisation : 120 €</li>
-        <li>✅ Dual boot Linux/Windows ou Mac OS : 100 €</li>
-        <li>✅ Pack formation 1h : 30 €</li>
-        <li>📍 Installation à domicile</li>
-      </ul>
-    </section>
+    function ajouterPaiement() {
+      const montant = parseFloat(document.getElementById("montant").value);
+      const note = document.getElementById("note").value;
+      if (!isNaN(montant)) {
+        paiements.push({ montant, note });
+        localStorage.setItem("paiements_cb", JSON.stringify(paiements));
+        document.getElementById("montant").value = "";
+        document.getElementById("note").value = "";
+        afficherListe();
+      } else {
+        alert("Montant invalide.");
+      }
+    }
 
-    <section>
-      <h2>📩 Contactez-nous</h2>
-      <form action="contact.php" method="POST">
-        <label for="name">Nom :</label>
-        <input type="text" id="name" name="name" required>
-        <br>
-        
-        <label for="email">Email :</label>
-        <input type="email" id="email" name="email" required>
-        <br>
-        
-        <label for="message">Message :</label>
-        <textarea id="message" name="message" required></textarea>
-        <br>
-        
-        <button type="submit">Envoyer</button>
-    </form>
-    
-    </section>
+    function reinitialiser() {
+      if (confirm("Réinitialiser tous les paiements ?")) {
+        paiements = [];
+        localStorage.removeItem("paiements_cb");
+        afficherListe();
+      }
+    }
 
-    <footer>
-      <p>📞 Contactez-nous : [Numéro de téléphone] - [Email]</p>
-    </footer>
-  </body>
+    function exporter() {
+      const texte = paiements.map(p => `- ${p.montant} € : ${p.note || "-"}`).join("\n");
+      const blob = new Blob([texte], { type: "text/plain" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "journal_cb.txt";
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    afficherListe();
+  </script>
+</body>
 </html>

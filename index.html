@@ -68,10 +68,12 @@
     }
 
     function reinitialiser() {
-      if (confirm("Réinitialiser tous les paiements ?")) {
+      const confirmation = window.prompt("Tapez OUI pour tout effacer");
+      if (confirmation && confirmation.toUpperCase() === "OUI") {
         paiements = [];
         localStorage.removeItem("paiements_cb");
         afficherListe();
+        alert("Données réinitialisées !");
       }
     }
 

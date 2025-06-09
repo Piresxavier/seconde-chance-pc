@@ -49,23 +49,21 @@
         total += parseFloat(p.montant);
         html += `<div class='paiement'>💳 ${p.montant} €<br>📝 ${p.note || "-"}</div>`;
       }
+
       document.getElementById("liste").innerHTML = html;
       document.getElementById("total").textContent = total.toFixed(2);
       document.getElementById("compteur").textContent = paiements.length;
     }
 
     function ajouterPaiement() {
-      const montantInput = document.getElementById("montant");
-      const noteInput = document.getElementById("note");
-      const montant = parseFloat(montantInput.value.replace(',', '.'));
-      const note = noteInput.value;
+      const montant = parseFloat(document.getElementById("montant").value.replace(',', '.'));
+      const note = document.getElementById("note").value;
       if (!isNaN(montant)) {
         paiements.push({ montant, note });
         localStorage.setItem("paiements_cb", JSON.stringify(paiements));
-        montantInput.value = "";
-        noteInput.value = "";
+        document.getElementById("montant").value = "";
+        document.getElementById("note").value = "";
         afficherListe();
-        setTimeout(() => montantInput.focus(), 100);
       } else {
         alert("Montant invalide.");
       }
@@ -91,13 +89,6 @@
       a.click();
       URL.revokeObjectURL(url);
     }
-
-    document.getElementById("montant").addEventListener("keydown", function (e) {
-      if (e.key === "Enter") {
-        e.preventDefault();
-        ajouterPaiement();
-      }
-    });
 
     afficherListe();
   </script>

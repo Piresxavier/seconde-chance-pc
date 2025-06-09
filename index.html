@@ -44,10 +44,12 @@
     function afficherListe() {
       let total = 0;
       let html = "";
-      for (let p of paiements) {
+      for (let i = paiements.length - 1; i >= 0; i--) {
+        const p = paiements[i];
         total += parseFloat(p.montant);
         html += `<div class='paiement'>💳 ${p.montant} €<br>📝 ${p.note || "-"}</div>`;
       }
+
       document.getElementById("liste").innerHTML = html;
       document.getElementById("total").textContent = total.toFixed(2);
       document.getElementById("compteur").textContent = paiements.length;
